@@ -26,12 +26,12 @@ THREE.RenderPass.prototype = Object.assign( Object.create( THREE.Pass.prototype 
 
 	render: function ( renderer, writeBuffer, readBuffer /*, deltaTime, maskActive */ ) {
 
-		var oldAutoClear = renderer.autoClear;
+		let oldAutoClear = renderer.autoClear;
 		renderer.autoClear = false;
 
 		this.scene.overrideMaterial = this.overrideMaterial;
 
-		var oldClearColor, oldClearAlpha;
+		let oldClearColor, oldClearAlpha;
 
 		if ( this.clearColor ) {
 

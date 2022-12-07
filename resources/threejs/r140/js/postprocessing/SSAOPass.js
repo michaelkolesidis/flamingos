@@ -30,7 +30,7 @@
 
 	// beauty render target with depth buffer
 
-	var depthTexture = new THREE.DepthTexture();
+	let depthTexture = new THREE.DepthTexture();
 	depthTexture.type = THREE.UnsignedShortType;
 	depthTexture.minFilter = THREE.NearestFilter;
 	depthTexture.maxFilter = THREE.NearestFilter;
@@ -254,8 +254,8 @@ THREE.SSAOPass.prototype = Object.assign( Object.create( THREE.Pass.prototype ),
 
 		// save original state
 		this.originalClearColor.copy( renderer.getClearColor() );
-		var originalClearAlpha = renderer.getClearAlpha();
-		var originalAutoClear = renderer.autoClear;
+		let originalClearAlpha = renderer.getClearAlpha();
+		let originalAutoClear = renderer.autoClear;
 
 		renderer.setRenderTarget( renderTarget );
 
@@ -282,8 +282,8 @@ THREE.SSAOPass.prototype = Object.assign( Object.create( THREE.Pass.prototype ),
 	renderOverride: function ( renderer, overrideMaterial, renderTarget, clearColor, clearAlpha ) {
 
 		this.originalClearColor.copy( renderer.getClearColor() );
-		var originalClearAlpha = renderer.getClearAlpha();
-		var originalAutoClear = renderer.autoClear;
+		let originalClearAlpha = renderer.getClearAlpha();
+		let originalAutoClear = renderer.autoClear;
 
 		renderer.setRenderTarget( renderTarget );
 		renderer.autoClear = false;
@@ -331,19 +331,19 @@ THREE.SSAOPass.prototype = Object.assign( Object.create( THREE.Pass.prototype ),
 
 	generateSampleKernel: function () {
 
-		var kernelSize = this.kernelSize;
-		var kernel = this.kernel;
+		let kernelSize = this.kernelSize;
+		let kernel = this.kernel;
 
-		for ( var i = 0; i < kernelSize; i ++ ) {
+		for ( let i = 0; i < kernelSize; i ++ ) {
 
-			var sample = new THREE.Vector3();
+			let sample = new THREE.Vector3();
 			sample.x = ( Math.random() * 2 ) - 1;
 			sample.y = ( Math.random() * 2 ) - 1;
 			sample.z = Math.random();
 
 			sample.normalize();
 
-			var scale = i / kernelSize;
+			let scale = i / kernelSize;
 			scale = THREE.Math.lerp( 0.1, 1, scale * scale );
 			sample.multiplyScalar( scale );
 
@@ -355,7 +355,7 @@ THREE.SSAOPass.prototype = Object.assign( Object.create( THREE.Pass.prototype ),
 
 	generateRandomKernelRotations: function () {
 
-		var width = 4, height = 4;
+		let width = 4, height = 4;
 
 		if ( THREE.SimplexNoise === undefined ) {
 
@@ -363,20 +363,20 @@ THREE.SSAOPass.prototype = Object.assign( Object.create( THREE.Pass.prototype ),
 
 		}
 
-		var simplex = new THREE.SimplexNoise();
+		let simplex = new THREE.SimplexNoise();
 
-		var size = width * height;
-		var data = new Float32Array( size * 4 );
+		let size = width * height;
+		let data = new Float32Array( size * 4 );
 
-		for ( var i = 0; i < size; i ++ ) {
+		for ( let i = 0; i < size; i ++ ) {
 
-			var stride = i * 4;
+			let stride = i * 4;
 
-			var x = ( Math.random() * 2 ) - 1;
-			var y = ( Math.random() * 2 ) - 1;
-			var z = 0;
+			let x = ( Math.random() * 2 ) - 1;
+			let y = ( Math.random() * 2 ) - 1;
+			let z = 0;
 
-			var noise = simplex.noise3d( x, y, z );
+			let noise = simplex.noise3d( x, y, z );
 
 			data[ stride ] = noise;
 			data[ stride + 1 ] = noise;

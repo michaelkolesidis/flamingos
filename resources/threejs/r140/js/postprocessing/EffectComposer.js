@@ -8,14 +8,14 @@
 
 	if ( renderTarget === undefined ) {
 
-		var parameters = {
+		let parameters = {
 			minFilter: THREE.LinearFilter,
 			magFilter: THREE.LinearFilter,
 			format: THREE.RGBAFormat,
 			stencilBuffer: false
 		};
 
-		var size = renderer.getSize( new THREE.Vector2() );
+		let size = renderer.getSize( new THREE.Vector2() );
 		this._pixelRatio = renderer.getPixelRatio();
 		this._width = size.width;
 		this._height = size.height;
@@ -66,7 +66,7 @@ Object.assign( THREE.EffectComposer.prototype, {
 
 	swapBuffers: function () {
 
-		var tmp = this.readBuffer;
+		let tmp = this.readBuffer;
 		this.readBuffer = this.writeBuffer;
 		this.writeBuffer = tmp;
 
@@ -76,7 +76,7 @@ Object.assign( THREE.EffectComposer.prototype, {
 
 		this.passes.push( pass );
 
-		var size = this.renderer.getDrawingBufferSize( new THREE.Vector2() );
+		let size = this.renderer.getDrawingBufferSize( new THREE.Vector2() );
 		pass.setSize( size.width, size.height );
 
 	},
@@ -89,7 +89,7 @@ Object.assign( THREE.EffectComposer.prototype, {
 
 	isLastEnabledPass: function ( passIndex ) {
 
-		for ( var i = passIndex + 1; i < this.passes.length; i ++ ) {
+		for ( let i = passIndex + 1; i < this.passes.length; i ++ ) {
 
 			if ( this.passes[ i ].enabled ) {
 
@@ -113,11 +113,11 @@ Object.assign( THREE.EffectComposer.prototype, {
 
 		}
 
-		var currentRenderTarget = this.renderer.getRenderTarget();
+		let currentRenderTarget = this.renderer.getRenderTarget();
 
-		var maskActive = false;
+		let maskActive = false;
 
-		var pass, i, il = this.passes.length;
+		let pass, i, il = this.passes.length;
 
 		for ( i = 0; i < il; i ++ ) {
 
@@ -132,7 +132,7 @@ Object.assign( THREE.EffectComposer.prototype, {
 
 				if ( maskActive ) {
 
-					var context = this.renderer.context;
+					let context = this.renderer.context;
 
 					context.stencilFunc( context.NOTEQUAL, 1, 0xffffffff );
 
@@ -170,7 +170,7 @@ Object.assign( THREE.EffectComposer.prototype, {
 
 		if ( renderTarget === undefined ) {
 
-			var size = this.renderer.getSize( new THREE.Vector2() );
+			let size = this.renderer.getSize( new THREE.Vector2() );
 			this._pixelRatio = this.renderer.getPixelRatio();
 			this._width = size.width;
 			this._height = size.height;
@@ -195,13 +195,13 @@ Object.assign( THREE.EffectComposer.prototype, {
 		this._width = width;
 		this._height = height;
 
-		var effectiveWidth = this._width * this._pixelRatio;
-		var effectiveHeight = this._height * this._pixelRatio;
+		let effectiveWidth = this._width * this._pixelRatio;
+		let effectiveHeight = this._height * this._pixelRatio;
 
 		this.renderTarget1.setSize( effectiveWidth, effectiveHeight );
 		this.renderTarget2.setSize( effectiveWidth, effectiveHeight );
 
-		for ( var i = 0; i < this.passes.length; i ++ ) {
+		for ( let i = 0; i < this.passes.length; i ++ ) {
 
 			this.passes[ i ].setSize( effectiveWidth, effectiveHeight );
 
@@ -251,10 +251,10 @@ Object.assign( THREE.Pass.prototype, {
 // Helper for passes that need to fill the viewport with a single quad.
 THREE.Pass.FullScreenQuad = ( function () {
 
-	var camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
-	var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+	let camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
+	let geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
-	var FullScreenQuad = function ( material ) {
+	let FullScreenQuad = function ( material ) {
 
 		this._mesh = new THREE.Mesh( geometry, material );
 
