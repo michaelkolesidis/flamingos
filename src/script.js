@@ -260,11 +260,11 @@ function render(now) {
 
   if (resizeRendererToDisplaySize(renderer)) {
     const aspect = canvas.clientWidth / canvas.clientHeight;
-    const fovX = THREE.Math.radToDeg(
-      2 * Math.atan(Math.tan(THREE.Math.degToRad(fov) * 0.5) * aspect)
+    const fovX = THREE.MathUtils.radToDeg(
+      2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(fov) * 0.5) * aspect)
     );
-    const newFovY = THREE.Math.radToDeg(
-      2 * Math.atan(Math.tan(THREE.Math.degToRad(maxFovX) * 0.5) / aspect)
+    const newFovY = THREE.MathUtils.radToDeg(
+      2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(maxFovX) * 0.5) / aspect)
     );
     camera.fov = fovX > maxFovX ? newFovY : fov;
     camera.aspect = aspect;
