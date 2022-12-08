@@ -8,7 +8,7 @@ import * as dat from "dat.gui";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { MaskPass } from "three/addons/postprocessing/MaskPass.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import { SSAOPass } from "three/addons/postprocessing/SSAOPass.js";
 import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
 import { SSAOShader } from "three/examples/jsm/shaders/SSAOShader";
@@ -253,17 +253,13 @@ if (useFog) {
   scene.add(sky);
 }
 
-
 /**
  * Postprocessing
  */
 const composer = new EffectComposer(renderer);
 
-const renderPass = new RenderPass( scene, camera );
-composer.addPass( renderPass );
-
-// const glitchPass = new GlitchPass();  // working
-// composer.addPass( glitchPass );
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
 
 // const shaderPass = new ShaderPass();
 // composer.addPass( shaderPass );
@@ -274,8 +270,11 @@ composer.addPass( renderPass );
 // const maskPass = new MaskPass();
 // composer.addPass( maskPass );
 
-const effectSSAO = new ShaderPass(THREE.SSAOShader);
-composer.addPass( effectSSAO );
+// const effectSSAO = new ShaderPass(THREE.SSAOShader);
+// composer.addPass( effectSSAO );
+
+// const glitchPass = new GlitchPass();  // working
+// composer.addPass( glitchPass );
 
 /**
  * Animate
