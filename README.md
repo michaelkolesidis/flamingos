@@ -23,8 +23,11 @@ As the code is quite dated by today's standards, I decided to fork it and to try
 * Use original postprocessing and shaders to achieve the exact same visual output (shadows etc.)
 * Make more parameters editable
 
+## Changelog
+I am not keeping a changelog, but the original parsed filed without the modifications can be found in the [initial commit](https://github.com/michaelkolesidis/flamingos/commit/006643c55f2699b36405107fca0e48efa25f5877).
+
 ## Contribution
-Feel free to contribute in any way you can. Pull requests are more than welcome!
+Feel free to contribute in any way you can. Pull requests are more than welcome! 
 
 ## License
 The whole project is licensed under the permissive [MIT License](https://opensource.org/licenses/MIT).
