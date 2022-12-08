@@ -1,8 +1,8 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import * as dat from "dat.gui"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import * as dat from "dat.gui";
 
 /**
  * Base
@@ -10,6 +10,7 @@ import * as dat from "dat.gui"
 // Debug
 const gui = new dat.GUI();
 gui.hide();
+dat.GUI.toggleHide();
 
 // Canvas
 const canvas = document.querySelector("#webgl");
@@ -17,47 +18,51 @@ const canvas = document.querySelector("#webgl");
 // Scene
 const scene = new THREE.Scene();
 
-
 /**
  * Sizes
  */
- const sizes = {
+const sizes = {
   width: window.innerWidth,
-  height: window.innerHeight
-}
-
+  height: window.innerHeight,
+};
 
 /**
  * Renderer
  */
- const renderer = new THREE.WebGLRenderer({ 
-  canvas: canvas 
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
 });
 
 renderer.shadowMap.enabled = true;
 renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 /**
  * Resizing and Fullscreen
  */
 // Resizing
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+window.addEventListener("resize", () => {
+  // Update sizes
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+  aspect = sizes.width / sizes.height;
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+  // Update camera
+  const fovX = THREE.MathUtils.radToDeg(
+    2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(fov) * 0.5) * aspect)
+  );
+  const newFovY = THREE.MathUtils.radToDeg(
+    2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(maxFovX) * 0.5) / aspect)
+  );
+  camera.fov = fovX > maxFovX ? newFovY : fov;
+  camera.aspect = aspect;
+  camera.updateProjectionMatrix();
 
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
+  // Update renderer
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
 
 // Fullscreen
 window.addEventListener("dblclick", () => {
@@ -79,12 +84,11 @@ window.addEventListener("dblclick", () => {
   }
 });
 
-
 /**
  * Camera
  */
 // Base camera
-const aspect = 2; // the canvas default
+let aspect = sizes.width / sizes.height;
 const fov = 35;
 const near = 0.1;
 const far = 5000;
@@ -105,7 +109,6 @@ if (useOrbitCamera) {
   controls.target.set(0, 0, 0);
   controls.update();
 }
-
 
 /**
  * Lights
@@ -141,7 +144,6 @@ if (showHelpers) {
   const dirLightHeper = new THREE.DirectionalLightHelper(dirLight, 10);
   scene.add(dirLightHeper);
 }
-
 
 /**
  * Models
@@ -190,7 +192,6 @@ loader.load("/models/Flamingo/Flamingo.glb", (gltf) => {
   }
 });
 
-
 /**
  * Shaders
  */
@@ -236,40 +237,15 @@ if (useFog) {
   scene.add(sky);
 }
 
-function resizeRendererToDisplaySize(renderer) {
-  const canvas = renderer.domElement;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-  if (width === canvas.width && height === canvas.height) {
-    return false;
-  }
-
-  renderer.setSize(width, height, false);
-  return true;
-}
-
-
 /**
  * Animate
  */
 let then = 0;
+
 function render(now) {
   now *= 0.001;
   const deltaTime = now - then;
   then = now;
-
-  if (resizeRendererToDisplaySize(renderer)) {
-    const aspect = canvas.clientWidth / canvas.clientHeight;
-    const fovX = THREE.MathUtils.radToDeg(
-      2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(fov) * 0.5) * aspect)
-    );
-    const newFovY = THREE.MathUtils.radToDeg(
-      2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(maxFovX) * 0.5) / aspect)
-    );
-    camera.fov = fovX > maxFovX ? newFovY : fov;
-    camera.aspect = aspect;
-    camera.updateProjectionMatrix();
-  }
 
   for (const { mesh, mixer } of birds) {
     mixer.update(deltaTime);
