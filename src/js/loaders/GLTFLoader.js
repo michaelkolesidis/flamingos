@@ -6,7 +6,9 @@
  * @author Don McCurdy / https://www.donmccurdy.com
  */
 
- THREE.GLTFLoader = ( function () {
+import * as THREE from "three"
+
+ export default THREE.GLTFLoader = ( function () {
 
 	function GLTFLoader( manager ) {
 
