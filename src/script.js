@@ -2,12 +2,88 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import * as dat from "dat.gui"
 
+/**
+ * Base
+ */
+// Debug
+const gui = new dat.GUI();
+gui.hide();
 
-const canvas = document.querySelector("#c");
-const renderer = new THREE.WebGLRenderer({ canvas });
+// Canvas
+const canvas = document.querySelector("#webgl");
+
+// Scene
 const scene = new THREE.Scene();
 
+
+/**
+ * Sizes
+ */
+ const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight
+}
+
+
+/**
+ * Renderer
+ */
+ const renderer = new THREE.WebGLRenderer({ 
+  canvas: canvas 
+});
+
+renderer.shadowMap.enabled = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+
+/**
+ * Resizing and Fullscreen
+ */
+// Resizing
+window.addEventListener('resize', () =>
+{
+    // Update sizes
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
+
+    // Update camera
+    camera.aspect = sizes.width / sizes.height
+    camera.updateProjectionMatrix()
+
+    // Update renderer
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+// Fullscreen
+window.addEventListener("dblclick", () => {
+  const fullscreenElement =
+    document.fullscreenElement || document.webkitFullscreenElement;
+
+  if (!fullscreenElement) {
+    if (canvas.requestFullscreen) {
+      canvas.requestFullscreen();
+    } else if (canvas.webkitRequestFullscreen) {
+      canvas.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+});
+
+
+/**
+ * Camera
+ */
+// Base camera
 const aspect = 2; // the canvas default
 const fov = 35;
 const near = 0.1;
@@ -23,16 +99,17 @@ const useFog = true;
 const useOrbitCamera = true;
 const showHelpers = false;
 
+// Controls
 if (useOrbitCamera) {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.set(0, 0, 0);
   controls.update();
 }
 
-renderer.gammaInput = true;
-renderer.gammaOutput = true;
-renderer.shadowMap.enabled = true;
 
+/**
+ * Lights
+ */
 const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
 hemiLight.color.setHSL(0.6, 1, 0.5);
 hemiLight.groundColor.setHSL(0.095, 1, 0.5);
@@ -65,10 +142,12 @@ if (showHelpers) {
   scene.add(dirLightHeper);
 }
 
+
+/**
+ * Models
+ */
 const birds = [];
-
 const loader = new GLTFLoader();
-
 const fogNear = 1350;
 const fogFar = 1500;
 
@@ -112,8 +191,9 @@ loader.load("/models/Flamingo/Flamingo.glb", (gltf) => {
 });
 
 
-window.s = scene;
-
+/**
+ * Shaders
+ */
 if (useFog) {
   const vertexShader = `
     varying vec3 vWorldPosition;
@@ -168,6 +248,10 @@ function resizeRendererToDisplaySize(renderer) {
   return true;
 }
 
+
+/**
+ * Animate
+ */
 let then = 0;
 function render(now) {
   now *= 0.001;
@@ -200,4 +284,4 @@ function render(now) {
   requestAnimationFrame(render);
 }
 
-requestAnimationFrame(render);
+render();
