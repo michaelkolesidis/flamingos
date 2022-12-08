@@ -8,9 +8,16 @@ import * as dat from "dat.gui";
  * Base
  */
 // Debug
-const gui = new dat.GUI();
+const gui = new dat.GUI({ closed: true, width: 400 });
 gui.hide();
 dat.GUI.toggleHide();
+
+const parameters = {
+  birdSpeed: 100,
+};
+
+let birdFolder = gui.addFolder("Birds");
+birdFolder.add(parameters, "birdSpeed", -200, 2000);
 
 // Canvas
 const canvas = document.querySelector("#webgl");
@@ -98,17 +105,13 @@ camera.position.set(-580, 55, 390);
 const maxFovX = 40;
 const numBirds = 40;
 const minMax = 700;
-const birdSpeed = 100;
 const useFog = true;
-const useOrbitCamera = true;
 const showHelpers = false;
 
 // Controls
-if (useOrbitCamera) {
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 0, 0);
-  controls.update();
-}
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 0, 0);
+controls.update();
 
 /**
  * Lights
@@ -119,6 +122,7 @@ hemiLight.groundColor.setHSL(0.095, 1, 0.5);
 hemiLight.position.set(0, 50, 0);
 scene.add(hemiLight);
 
+// helpers
 if (showHelpers) {
   const hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 10);
   scene.add(hemiLightHelper);
@@ -250,7 +254,9 @@ function render(now) {
   for (const { mesh, mixer } of birds) {
     mixer.update(deltaTime);
     mesh.position.z =
-      ((mesh.position.z + minMax + mixer.timeScale * birdSpeed * deltaTime) %
+      ((mesh.position.z +
+        minMax +
+        mixer.timeScale * parameters.birdSpeed * deltaTime) %
         (minMax * 2)) -
       minMax;
   }
