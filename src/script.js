@@ -4,6 +4,18 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as dat from "dat.gui";
 
+// originals
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { MaskPass } from "three/addons/postprocessing/MaskPass.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { SSAOPass } from "three/addons/postprocessing/SSAOPass.js";
+import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
+import { SSAOShader } from "three/examples/jsm/shaders/SSAOShader";
+
+// extra
+// import { GlitchPass } from 'three/addons/postprocessing/GlitchPass.js';
+
 /**
  * Base
  */
@@ -241,12 +253,36 @@ if (useFog) {
   scene.add(sky);
 }
 
+
+/**
+ * Postprocessing
+ */
+const composer = new EffectComposer(renderer);
+
+const renderPass = new RenderPass( scene, camera );
+composer.addPass( renderPass );
+
+// const glitchPass = new GlitchPass();  // working
+// composer.addPass( glitchPass );
+
+// const shaderPass = new ShaderPass();
+// composer.addPass( shaderPass );
+
+// const ssaoPass = new SSAOPass();
+// composer.addPass( ssaoPass );
+
+// const maskPass = new MaskPass();
+// composer.addPass( maskPass );
+
+const effectSSAO = new ShaderPass(THREE.SSAOShader);
+composer.addPass( effectSSAO );
+
 /**
  * Animate
  */
 let then = 0;
 
-function render(now) {
+function animate(now) {
   now *= 0.001;
   const deltaTime = now - then;
   then = now;
@@ -261,9 +297,9 @@ function render(now) {
       minMax;
   }
 
-  renderer.render(scene, camera);
+  composer.render(scene, camera);
 
-  requestAnimationFrame(render);
+  requestAnimationFrame(animate);
 }
 
-render();
+animate();
