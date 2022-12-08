@@ -1,16 +1,8 @@
 import "./style.css";
 import * as THREE from "three";
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import OrbitControls from "./js/controls/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-// import GLTFLoader from "./js/loaders/GLTFLoader";
-import EffectComposer from "./js/postprocessing/EffectComposer";
-import MaskPass from "./js/postprocessing/MaskPass";
-import RenderPass from "./js/postprocessing/RenderPass";
-import ShaderPass from "./js/postprocessing/ShaderPass";
-import SSAOPass from "./js/postprocessing/SSAOPass";
-import CopyShader from "./js/shaders/CopyShader";
-import SSAOShader from "./js/shaders/SSAOShader";
+
 
 const canvas = document.querySelector("#c");
 const renderer = new THREE.WebGLRenderer({ canvas });
@@ -32,7 +24,7 @@ const useOrbitCamera = true;
 const showHelpers = false;
 
 if (useOrbitCamera) {
-  const controls = new OrbitControls(camera);
+  const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.set(0, 0, 0);
   controls.update();
 }
