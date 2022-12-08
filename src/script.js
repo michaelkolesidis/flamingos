@@ -193,7 +193,7 @@ loader.load("/models/Flamingo/Flamingo.glb", (gltf) => {
 });
 
 /**
- * Shaders
+ * Environment (Shaders)
  */
 if (useFog) {
   const vertexShader = `
@@ -226,7 +226,7 @@ if (useFog) {
   uniforms.topColor.value.copy(hemiLight.color);
   scene.fog = new THREE.Fog(scene.background, fogNear, fogFar);
   scene.fog.color.copy(uniforms.bottomColor.value);
-  const skyGeo = new THREE.SphereBufferGeometry(3000, 32, 15);
+  const skyGeo = new THREE.SphereGeometry(3000, 32, 15);
   const skyMat = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
