@@ -5,6 +5,7 @@
 Forked from [Three.js Fundamentals](https://github.com/gfxfundamentals/threejsfundamentals) and cleaned up.
 
 ### Plans
+* Refactor project and use Three.js as an import
 * Update it to use modern Three.js and the latest version of all libraries
 * Clean up code residuals
 * Add dat.GUI
