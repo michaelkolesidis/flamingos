@@ -2,7 +2,8 @@ import "./style.css";
 import * as THREE from "three";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import OrbitControls from "./js/controls/OrbitControls";
-import GLTFLoader from "./js/loaders/GLTFLoader";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+// import GLTFLoader from "./js/loaders/GLTFLoader";
 import EffectComposer from "./js/postprocessing/EffectComposer";
 import MaskPass from "./js/postprocessing/MaskPass";
 import RenderPass from "./js/postprocessing/RenderPass";
@@ -73,7 +74,9 @@ if (showHelpers) {
 }
 
 const birds = [];
+
 const loader = new GLTFLoader();
+
 const fogNear = 1350;
 const fogFar = 1500;
 
@@ -88,7 +91,7 @@ function rand(min, max) {
   return min + Math.random() * (max - min);
 }
 
-loader.load("models/flamingo/Flamingo.glb", (gltf) => {
+loader.load("/models/Flamingo/Flamingo.glb", (gltf) => {
   const orig = gltf.scene.children[0];
   orig.castShadow = true;
   orig.receiveShadow = true;
@@ -115,6 +118,7 @@ loader.load("models/flamingo/Flamingo.glb", (gltf) => {
     });
   }
 });
+
 
 window.s = scene;
 
