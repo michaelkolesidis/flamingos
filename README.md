@@ -8,7 +8,7 @@
 
 For many of us, [3 Dreams of Black](https://experiments.withgoogle.com/3-dreams-of-black) (an old Chrome experiment) was our one of our first contacts with WebGL. It was utterly impressive for its time (and it still is, if you ask me). Then, [Greggman](https://github.com/greggman) used the same flamingo model, to create a scene of similar aesthetics, that he used as a background to the homepage of this project, named [Three.js Fundamentals](https://github.com/gfxfundamentals/threejsfundamentals). It was a great tutorial to Three.js and it has been incorporated into the official Three.js docs. An old version where you can see the background, is still available [here](https://r105.threejsfundamentals.org/threejs/background.html).
 
-As the code is quite dated by today's standards, I decided to fork it and to try to modernize it, while maintaining the exact same visual output. The project doesn't have a larger purpose, it's just my tiny love letter to Three.js, and ,hopegfully, a good excercise in my learning process.
+As the code is quite dated by today's standards, I decided to fork it and to try to modernize it, while maintaining the exact same visual output. The project doesn't have a larger purpose, it's just my tiny love letter to Three.js, and ,hopefully, a good excercise in my learning process.
 
 ## Roadmap
 ### Done
