@@ -11,7 +11,9 @@ For many of us, [3 Dreams of Black](https://experiments.withgoogle.com/3-dreams-
 As the code is quite dated by today's standards, I decided to fork it and to try to modernize it, while maintaining the exact same visual output. The project doesn't have a larger purpose, it's just my tiny love letter to Three.js, and ,hopefully, a good excercise in my learning process.
 
 ## Roadmap
+
 ### Done
+
 * Three.js as an import
 * Update Three.js and all packages to latest version
 * Remove/update obsolete code
@@ -20,14 +22,18 @@ As the code is quite dated by today's standards, I decided to fork it and to try
 * Add dat.GUI
 
 ### Plans
+
 * Use original postprocessing and shaders to achieve the exact same visual output (shadows etc.)
 * Make more parameters editable
 
 ## Changelog
+
 I am not keeping a changelog, but the original parsed filed without the modifications can be found in the [initial commit](https://github.com/michaelkolesidis/flamingos/commit/006643c55f2699b36405107fca0e48efa25f5877).
 
 ## Contribution
-Feel free to contribute in any way you can. Pull requests are more than welcome! 
+
+Feel free to contribute in any way you can. Pull requests are more than welcome!
 
 ## License
+
 The whole project is licensed under the permissive [MIT License](https://opensource.org/licenses/MIT).
