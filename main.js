@@ -180,7 +180,7 @@ function rand(min, max) {
   return min + Math.random() * (max - min);
 }
 
-loader.load("/Flamingo.glb", (gltf) => {
+loader.load("./Flamingo.glb", (gltf) => {
   const orig = gltf.scene.children[0];
   orig.castShadow = true;
   orig.receiveShadow = true;
