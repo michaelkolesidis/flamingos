@@ -1,20 +1,20 @@
-import "./style.css";
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import * as dat from "dat.gui";
+import './style.css';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as dat from 'dat.gui';
 
 // originals
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { MaskPass } from "three/addons/postprocessing/MaskPass.js";
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
-import { SSAOPass } from "three/addons/postprocessing/SSAOPass.js";
-import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
-import { SSAOShader } from "three/examples/jsm/shaders/SSAOShader";
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { MaskPass } from 'three/addons/postprocessing/MaskPass.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { SSAOPass } from 'three/addons/postprocessing/SSAOPass.js';
+import { CopyShader } from 'three/examples/jsm/shaders/CopyShader';
+import { SSAOShader } from 'three/examples/jsm/shaders/SSAOShader';
 
 // extra
-// import { GlitchPass } from 'three/addons/postprocessing/GlitchPass.js';
+import { GlitchPass } from 'three/addons/postprocessing/GlitchPass.js';
 
 /**
  * Base
@@ -28,11 +28,11 @@ const parameters = {
   birdSpeed: 100,
 };
 
-let birdFolder = gui.addFolder("Birds");
-birdFolder.add(parameters, "birdSpeed", -200, 2000);
+let birdFolder = gui.addFolder('Birds');
+birdFolder.add(parameters, 'birdSpeed', -200, 2000);
 
 // Canvas
-const canvas = document.querySelector("#webgl");
+const canvas = document.querySelector('#webgl');
 
 // Scene
 const scene = new THREE.Scene();
@@ -57,11 +57,17 @@ renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+// renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+renderer.toneMapping = THREE.LinearToneMapping;
+renderer.toneMappingExposure = 3;
+
 /**
  * Resizing and Fullscreen
  */
 // Resizing
-window.addEventListener("resize", () => {
+window.addEventListener('resize', () => {
   // Update sizes
   sizes.width = window.innerWidth;
   sizes.height = window.innerHeight;
@@ -69,10 +75,10 @@ window.addEventListener("resize", () => {
 
   // Update camera
   const fovX = THREE.MathUtils.radToDeg(
-    2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(fov) * 0.5) * aspect)
+    2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(fov) * 0.5) * aspect),
   );
   const newFovY = THREE.MathUtils.radToDeg(
-    2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(maxFovX) * 0.5) / aspect)
+    2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(maxFovX) * 0.5) / aspect),
   );
   camera.fov = fovX > maxFovX ? newFovY : fov;
   camera.aspect = aspect;
@@ -84,7 +90,7 @@ window.addEventListener("resize", () => {
 });
 
 // Fullscreen
-window.addEventListener("dblclick", () => {
+window.addEventListener('dblclick', () => {
   const fullscreenElement =
     document.fullscreenElement || document.webkitFullscreenElement;
 
@@ -112,7 +118,7 @@ const fov = 35;
 const near = 0.1;
 const far = 5000;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-camera.position.set(-580, 55, 390);
+camera.position.set(-550, 55, 390);
 
 const maxFovX = 40;
 const numBirds = 40;
@@ -180,7 +186,7 @@ function rand(min, max) {
   return min + Math.random() * (max - min);
 }
 
-loader.load("/Flamingo.glb", (gltf) => {
+loader.load('/Flamingo.glb', (gltf) => {
   const orig = gltf.scene.children[0];
   orig.castShadow = true;
   orig.receiveShadow = true;
@@ -191,7 +197,7 @@ loader.load("/Flamingo.glb", (gltf) => {
     mesh.position.set(
       rand(-150, 150),
       (u * 2 - 1) * 200,
-      ((minMax * 2 * i * 1.7) % (minMax * 2)) - minMax / 2
+      ((minMax * 2 * i * 1.7) % (minMax * 2)) - minMax / 2,
     );
     scene.add(mesh);
     mesh.material = mesh.material.clone();
@@ -235,7 +241,7 @@ if (useFog) {
 
   const uniforms = {
     topColor: { value: new THREE.Color(0x88aabb) },
-    bottomColor: { value: new THREE.Color(0xefcb7f) },
+    bottomColor: { value: new THREE.Color(0xffe799) },
     offset: { value: 730 },
     exponent: { value: 0.3 },
   };
